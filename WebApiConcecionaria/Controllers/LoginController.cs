@@ -18,7 +18,7 @@ namespace WebApiConcecionaria.Controllers
     {
         private readonly IUserService _usuarioService;
         private readonly IUnitOfWork _uow;
-
+        private readonly ILogger<LoginController> _logger;//activacion del logger
         public LoginController(IUserService usuarioService, IUnitOfWork uow)
         {
             _usuarioService = usuarioService;
@@ -28,8 +28,10 @@ namespace WebApiConcecionaria.Controllers
         public ActionResult Login([FromBody] UserRequest req)
         {
             var response = _usuarioService.Login(req.Email, req.Password);
+
             if (response == null)
             {
+                
                 return Unauthorized();
             }
             var token = _usuarioService.GetToken(response);

@@ -126,7 +126,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseMiddleware<pruevaMiddleware>
+app.UseMiddleware<pruevaMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

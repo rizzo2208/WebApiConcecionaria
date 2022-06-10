@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiConcecionaria", "WebApiConcecionaria\WebApiConcecionaria.csproj", "{8BA51E41-42DA-499A-9BAB-376410F91554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiConcecionaria", "WebApiConcecionaria\WebApiConcecionaria.csproj", "{8BA51E41-42DA-499A-9BAB-376410F91554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Core.Business", "API.Core.Business\API.Core.Business.csproj", "{D4B5185C-5D07-4090-9109-CD92C6587102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Core.Business", "API.Core.Business\API.Core.Business.csproj", "{D4B5185C-5D07-4090-9109-CD92C6587102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Data.Core", "API.Data.Core\API.Data.Core.csproj", "{9FEDC3BF-0261-4493-A5A0-7D8A7D3201F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Data.Core", "API.Data.Core\API.Data.Core.csproj", "{9FEDC3BF-0261-4493-A5A0-7D8A7D3201F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Generic.Core", "API.Generic.Core\API.Generic.Core.csproj", "{25EDD379-22CD-4643-A19F-067D4DE453AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Generic.Core", "API.Generic.Core\API.Generic.Core.csproj", "{25EDD379-22CD-4643-A19F-067D4DE453AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Uses.Cases", "API.Uses.Cases\API.Uses.Cases.csproj", "{2E647925-D5C5-4CDF-85B5-43D6CF2C5D93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Uses.Cases", "API.Uses.Cases\API.Uses.Cases.csproj", "{2E647925-D5C5-4CDF-85B5-43D6CF2C5D93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{4B2A54ED-47A5-4C89-B329-3300F4745741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2E647925-D5C5-4CDF-85B5-43D6CF2C5D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E647925-D5C5-4CDF-85B5-43D6CF2C5D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E647925-D5C5-4CDF-85B5-43D6CF2C5D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B2A54ED-47A5-4C89-B329-3300F4745741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B2A54ED-47A5-4C89-B329-3300F4745741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B2A54ED-47A5-4C89-B329-3300F4745741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B2A54ED-47A5-4C89-B329-3300F4745741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

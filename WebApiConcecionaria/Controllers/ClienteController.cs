@@ -14,9 +14,12 @@ namespace WebApiConcecionaria.Controllers
 
         private readonly IUnitOfWork _context;
 
-        public ClienteController(IUnitOfWork context)
+        private readonly ILogger<ClienteController> _logger;
+
+        public ClienteController(IUnitOfWork context, ILogger<ClienteController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         //GET
@@ -31,6 +34,7 @@ namespace WebApiConcecionaria.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Cliente>> Get()
         {
+            _logger.LogInformation("get Cliente Funcionando");
             var entidad = _context.ClienteRepo.GetAll();
             return Ok(entidad);
         }
@@ -47,6 +51,7 @@ namespace WebApiConcecionaria.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Cliente cliente)
         {
+            _logger.LogInformation("Post Cliente Funcionando");
             _context.ClienteRepo.Insert(cliente);
             _context.Save();
             return Ok();
@@ -64,16 +69,19 @@ namespace WebApiConcecionaria.Controllers
         [HttpPut("{id}")]
         public ActionResult Put([FromBody] Cliente cliente, int id)
         {
-            try
+            if (id != cliente.idCliente)
             {
+                _logger.LogError("NO se encontro id del registro");
+                return BadRequest();
+            }
+            else
+            {
+                _logger.LogInformation("Put cliente funcionando");
                 _context.ClienteRepo.Update(cliente);
                 _context.Save();
                 return Ok();
             }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
+
         }
 
         //DELETE
@@ -90,12 +98,19 @@ namespace WebApiConcecionaria.Controllers
         public ActionResult Delete(int id)
         {
             var entity = _context.ClienteRepo.GetById(id);
+
             if (entity == null)
             {
+                _logger.LogError("NO se encontro registro para eliminar");
                 return NotFound();
             }
-            _context.ClienteRepo.Delete(id);
-            _context.Save();
+            else
+            {
+                _logger.LogInformation("elregisto ha sido borrado");
+                _context.ClienteRepo.Delete(id);
+                _context.Save();
+            }
+            
 
             return Ok();
 

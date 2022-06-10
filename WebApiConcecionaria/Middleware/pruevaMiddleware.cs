@@ -1,25 +1,18 @@
 ﻿namespace WebApiConcecionaria.Middleware
-{
-    public class pruevaMiddleware
-    {
-    }
-
-	namespace WebPersonal.BackEnd.API.Middlewares
+{ 
+	public class pruevaMiddleware
 	{
+		private readonly RequestDelegate _next;
 
-		public class EjemploMiddleware
+		public pruevaMiddleware(RequestDelegate next)
 		{
-			private readonly RequestDelegate _next;
+			_next = next;
+		}
 
-			public EjemploMiddleware(RequestDelegate next)
-			{
-				_next = next;
-			}
-
-			public async Task Invoke(HttpContext context)
-			{
-				await _next(context);
-			}
+		public async Task Invoke(HttpContext context)
+		{
+			await _next(context);
 		}
 	}
+	
 }
