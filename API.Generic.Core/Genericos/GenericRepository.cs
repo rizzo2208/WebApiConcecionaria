@@ -1,4 +1,5 @@
 ﻿using API.Core.Business.DBContext;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,28 @@ namespace API.Generic.Core.Genericos
     {
 
         protected readonly AppDbContext _db;
+        protected readonly ILogger _logger;
 
-        public GenericRepository(AppDbContext db)
+        public GenericRepository(AppDbContext db, ILogger logger)
         {
             _db = db;
+            _logger = logger;
+
         }
 
         public void Delete(int? id)
         {
-            var entity = GetById(id);//se fija si existe el campo
+            _logger.LogWarning("se fija si existe el campo y lo borra");
+            var entity = GetById(id);
 
             if (entity == null)
             {
+                _logger.LogError("DELETE ERROR");
                 throw new Exception("No se encontro objeto");//en caso de que no exista
             }
             else
             {
+                _logger.LogInformation("ENTIDAD BORRADA");
                 _db.Set<T>().Remove(entity);//en case de que exista, lo borra.
             }
 
@@ -34,23 +41,27 @@ namespace API.Generic.Core.Genericos
 
         public IEnumerable<T> GetAll()
         {
-            return _db.Set<T>().ToList();//llama todos la lista de elementos
+            _logger.LogInformation("llama el dato solicitado");
+            return _db.Set<T>().ToList();
         }
 
         public T GetById(int? id)
         {
-            var aux = _db.Set<T>().Find(id);//trae cosa de la base de datos
+            _logger.LogInformation("Consulta el dato llamado : {id}", DateTimeOffset.Now);
+            var aux = _db.Set<T>().Find(id);
             return aux;
         }
 
         public void Insert(T entity)
         {
-            _db.Set<T>().Add(entity);//agrega un campo nuevo
+            _logger.LogInformation("agrega un campo nuevo");
+            _db.Set<T>().Add(entity);
         }
 
         public void Update(T entity)
         {
-            _db.Set<T>().Update(entity);//modifica campo exisente
+            _logger.LogInformation("modifica campo exisente");
+            _db.Set<T>().Update(entity);
         }
     }
 }

@@ -4,11 +4,13 @@ using API.Generic.Core;
 using FakeItEasy;
 using WebApiConcecionaria.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Testing
 {
     public class UnitTest1
     {
+        private readonly ILogger <ClienteController> logger = A.Fake<ILogger<ClienteController>>();
         private readonly IUnitOfWork _context = A.Fake<IUnitOfWork>();
         Cliente cliente = new Cliente()
         {
@@ -27,7 +29,7 @@ namespace Testing
         [Fact]
         public void Test1()
         {
-            var controller = new ClienteController(_context);//crea una instancia
+            var controller = new ClienteController(_context,logger);//crea una instancia
             var result = controller.Get();//invoca el get del cotrolador
             Assert.NotNull(result);//muestra el resultado
         }
@@ -37,7 +39,7 @@ namespace Testing
         [Fact]
         public void Test2()
         {
-            var controller = new ClienteController(_context);//crea una instancia
+            var controller = new ClienteController(_context, logger);//crea una instancia
             var result = controller.Post(cliente);//invoca el post del cotrolador
         }
         //----------------------------------------------------------
@@ -46,7 +48,7 @@ namespace Testing
         [Fact]
         public void Test3()
         {
-            var controller = new ClienteController(_context);//crea una instancia
+            var controller = new ClienteController(_context, logger);//crea una instancia
             var result = controller.Delete(1);//invoca el delete del cotrolador
             Assert.NotNull(result);
         } 
@@ -54,7 +56,7 @@ namespace Testing
         [Fact]
         public void Test4()
         {
-            var controller = new ClienteController(_context);//crea una instancia
+            var controller = new ClienteController(_context, logger);//crea una instancia
             var ClienteNuevo = controller.Post(cliente);
             var result = controller.Delete(cliente.idCliente);//invoca el get del cotrolador
             Assert.IsType<OkResult>(result);
@@ -64,7 +66,7 @@ namespace Testing
         public void Test5()
         {
             A.CallTo(() => _context.ClienteRepo.GetById(1)).Returns(null);//
-            var controller = new ClienteController(_context);//crea una instancia
+            var controller = new ClienteController(_context, logger);//crea una instancia
             var result = controller.Delete(1);//invoca el get del cotrolador
             Assert.IsType<NotFoundResult>(result);
 

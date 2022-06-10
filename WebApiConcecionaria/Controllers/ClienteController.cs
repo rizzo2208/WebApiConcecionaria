@@ -106,7 +106,7 @@ namespace WebApiConcecionaria.Controllers
             }
             else
             {
-                _logger.LogInformation("elregisto ha sido borrado");
+                _logger.LogInformation("DELETE ON");
                 _context.ClienteRepo.Delete(id);
                 _context.Save();
             }
