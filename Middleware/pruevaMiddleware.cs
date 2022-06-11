@@ -1,8 +1,11 @@
-﻿namespace WebApiConcecionaria.Middleware
-{ 
-	public class pruevaMiddleware
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+public class pruevaMiddleware
 	{
 		private readonly RequestDelegate _next;
+		private readonly ILogger logger;
 
 		public pruevaMiddleware(RequestDelegate next)
 		{
@@ -14,5 +17,6 @@
 			await _next(context);
 		}
 	}
+
 	
-}
+

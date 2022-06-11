@@ -18,7 +18,7 @@ namespace WebApiConcecionaria.Controllers
     {
         private readonly IUserService _usuarioService;
         private readonly IUnitOfWork _uow;
-        private readonly ILogger<LoginController> _logger;//activacion del logger
+        
         public LoginController(IUserService usuarioService, IUnitOfWork uow)
         {
             _usuarioService = usuarioService;

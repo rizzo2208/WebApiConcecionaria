@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\API.Uses.Cases\API.Uses.Cases.csproj" />
+    <ProjectReference Include="..\Middleware\Middleware.csproj" />
   </ItemGroup>
 
   <ItemGroup>

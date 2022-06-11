@@ -1,5 +1,6 @@
 ﻿using API.Core.Business.DBContext;
 using Microsoft.Extensions.Logging;
+using Middleware.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +13,30 @@ namespace API.Generic.Core.Genericos
     {
 
         protected readonly AppDbContext _db;
-        protected readonly ILogger _logger;
+        protected readonly LoggerCustom logger;
 
-        public GenericRepository(AppDbContext db, ILogger logger)
+        public GenericRepository(AppDbContext db, LoggerCustom logger)
         {
             _db = db;
-            _logger = logger;
+            this.logger = logger;
+            
 
         }
 
         public void Delete(int? id)
         {
-            _logger.LogWarning("se fija si existe el campo y lo borra");
-            var entity = GetById(id);
+            
+            var entity = GetById(id);//se fija si existe el campo y lo borra
 
             if (entity == null)
             {
-                _logger.LogError("DELETE ERROR");
+
+                logger.Info("REMOVE EXCEPTION CATCH => OK ");
                 throw new Exception("No se encontro objeto");//en caso de que no exista
             }
             else
             {
-                _logger.LogInformation("ENTIDAD BORRADA");
+                logger.Info("REMOVE => OK ");
                 _db.Set<T>().Remove(entity);//en case de que exista, lo borra.
             }
 
@@ -41,27 +44,27 @@ namespace API.Generic.Core.Genericos
 
         public IEnumerable<T> GetAll()
         {
-            _logger.LogInformation("llama el dato solicitado");
-            return _db.Set<T>().ToList();
+            logger.Info(@"GETALL METHOD => OK ");
+            return _db.Set<T>().ToList();//llama el dato solicitado
         }
 
         public T GetById(int? id)
         {
-            _logger.LogInformation("Consulta el dato llamado : {id}", DateTimeOffset.Now);
-            var aux = _db.Set<T>().Find(id);
+            logger.Info("GETBYID METHOD => OK ");
+            var aux = _db.Set<T>().Find(id);//Consulta el dato llamado
             return aux;
         }
 
         public void Insert(T entity)
         {
-            _logger.LogInformation("agrega un campo nuevo");
-            _db.Set<T>().Add(entity);
+            logger.Info("INSERT METHOD => OK");
+            _db.Set<T>().Add(entity);//agrega un campo nuevo
         }
 
         public void Update(T entity)
         {
-            _logger.LogInformation("modifica campo exisente");
-            _db.Set<T>().Update(entity);
+            logger.Info("UPLOADING METHOD => OK ");
+            _db.Set<T>().Update(entity);//modifica campo exisente
         }
     }
 }

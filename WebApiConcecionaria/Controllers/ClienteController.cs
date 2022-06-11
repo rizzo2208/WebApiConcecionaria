@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
+
 namespace WebApiConcecionaria.Controllers
 {
     [Authorize]
@@ -14,12 +16,10 @@ namespace WebApiConcecionaria.Controllers
 
         private readonly IUnitOfWork _context;
 
-        private readonly ILogger<ClienteController> _logger;
-
-        public ClienteController(IUnitOfWork context, ILogger<ClienteController> logger)
+        public ClienteController(IUnitOfWork context)
         {
             _context = context;
-            _logger = logger;
+           
         }
 
         //GET
@@ -34,8 +34,8 @@ namespace WebApiConcecionaria.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Cliente>> Get()
         {
-            _logger.LogInformation("get Cliente Funcionando");
-            var entidad = _context.ClienteRepo.GetAll();
+           
+            var entidad = _context.ClienteRepo.GetAll();//llama a todos los registros activos
             return Ok(entidad);
         }
 
@@ -51,8 +51,8 @@ namespace WebApiConcecionaria.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Cliente cliente)
         {
-            _logger.LogInformation("Post Cliente Funcionando");
-            _context.ClienteRepo.Insert(cliente);
+            
+            _context.ClienteRepo.Insert(cliente);//agrega un registro
             _context.Save();
             return Ok();
         }
@@ -71,13 +71,13 @@ namespace WebApiConcecionaria.Controllers
         {
             if (id != cliente.idCliente)
             {
-                _logger.LogError("NO se encontro id del registro");
-                return BadRequest();
+                
+                return BadRequest();//NO se encontro id del registro
             }
             else
             {
-                _logger.LogInformation("Put cliente funcionando");
-                _context.ClienteRepo.Update(cliente);
+                
+                _context.ClienteRepo.Update(cliente);//modifica registro
                 _context.Save();
                 return Ok();
             }
@@ -101,13 +101,12 @@ namespace WebApiConcecionaria.Controllers
 
             if (entity == null)
             {
-                _logger.LogError("NO se encontro registro para eliminar");
+                
                 return NotFound();
             }
             else
             {
-                _logger.LogInformation("DELETE ON");
-                _context.ClienteRepo.Delete(id);
+                _context.ClienteRepo.Delete(id);//borra el registro
                 _context.Save();
             }
             

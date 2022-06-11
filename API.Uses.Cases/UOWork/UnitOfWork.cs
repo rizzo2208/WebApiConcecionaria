@@ -3,6 +3,7 @@ using API.Data.Core.Repository;
 using API.Data.Core.Repository.Class;
 using API.Data.Core.Repository.InterfaceRepo;
 using Microsoft.Extensions.Logging;
+using Middleware.Logger;
 
 namespace API.Uses.Cases.UOWork
 {
@@ -10,6 +11,7 @@ namespace API.Uses.Cases.UOWork
     {
         private readonly AppDbContext _context;
         private readonly ILogger _logger;
+        public  LoggerCustom loggerCustom { get;private set; }
 
         public IClientesRepository ClienteRepo { get; private set; }
 
@@ -21,14 +23,16 @@ namespace API.Uses.Cases.UOWork
         
 
 
-        public UnitOfWork(AppDbContext context, ILoggerFactory loggerFactory)
+        public UnitOfWork(AppDbContext context, ILoggerFactory logger)
         {
             _context = context;
-            _logger = loggerFactory.CreateLogger("logs");
-            ClienteRepo = new ClienteRepostory(context,_logger);
-            VentaRepo = new VentaRepository(context, _logger);
-            VehiculoRepo = new VehiculoRepository(context, _logger);
-            UsuarioRepo = new UsuarioRepositorio(context,_logger);
+            _logger = logger.CreateLogger("logs");
+            loggerCustom = new LoggerCustom(_logger);
+
+            ClienteRepo = new ClienteRepostory(context,loggerCustom);
+            VentaRepo = new VentaRepository(context,loggerCustom);
+            VehiculoRepo = new VehiculoRepository(context,loggerCustom);
+            UsuarioRepo = new UsuarioRepositorio(context,loggerCustom);
         }
 
         public void Dispose()

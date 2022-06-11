@@ -10,7 +10,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
-using WebApiConcecionaria.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
