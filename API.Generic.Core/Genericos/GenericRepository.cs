@@ -23,6 +23,7 @@ namespace API.Generic.Core.Genericos
 
         }
 
+        # region Delete
         public void Delete(int? id)
         {
             
@@ -31,40 +32,51 @@ namespace API.Generic.Core.Genericos
             if (entity == null)
             {
 
-                logger.Info("REMOVE EXCEPTION CATCH => OK ");
+                logger.Info("No Se Encontro Registro");
                 throw new Exception("No se encontro objeto");//en caso de que no exista
             }
             else
             {
-                logger.Info("REMOVE => OK ");
+                logger.Info("REMOVIDO => OK ");
                 _db.Set<T>().Remove(entity);//en case de que exista, lo borra.
             }
+                
+            
 
         }
+        #endregion Delete
 
+
+        #region GetById
         public IEnumerable<T> GetAll()
         {
-            logger.Info(@"GETALL METHOD => OK ");
+            logger.Info(@"METODO GET => OK ");
             return _db.Set<T>().ToList();//llama el dato solicitado
         }
-
+        
         public T GetById(int? id)
         {
-            logger.Info("GETBYID METHOD => OK ");
+            logger.Info("METODO GET ID => OK ");
             var aux = _db.Set<T>().Find(id);//Consulta el dato llamado
             return aux;
         }
+        #endregion GetById
 
+        #region Insert
         public void Insert(T entity)
         {
-            logger.Info("INSERT METHOD => OK");
+            logger.Info("METODO SET => OK");
             _db.Set<T>().Add(entity);//agrega un campo nuevo
         }
+        #endregion Insert
 
+        #region Update
         public void Update(T entity)
         {
-            logger.Info("UPLOADING METHOD => OK ");
+            logger.Info("METODO UPDATE => OK ");
             _db.Set<T>().Update(entity);//modifica campo exisente
         }
+        #endregion Update
+
     }
 }

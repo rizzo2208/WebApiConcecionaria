@@ -3,8 +3,7 @@ using API.Uses.Cases.UOWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Middleware.Logger;
 
 namespace WebApiConcecionaria.Controllers
 {
@@ -15,11 +14,14 @@ namespace WebApiConcecionaria.Controllers
     {
 
         private readonly IUnitOfWork _context;
+        private readonly LoggerCustom loggerCustom;
+        private readonly ILogger<ClienteController> _logger;
 
-        public ClienteController(IUnitOfWork context)
+        public ClienteController(IUnitOfWork context, ILogger<ClienteController> logger)
         {
             _context = context;
-           
+            _logger = logger;
+            loggerCustom = new LoggerCustom(_logger);
         }
 
         //GET
@@ -34,7 +36,7 @@ namespace WebApiConcecionaria.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Cliente>> Get()
         {
-           
+            loggerCustom.Info("Llamado Get Cliente"); 
             var entidad = _context.ClienteRepo.GetAll();//llama a todos los registros activos
             return Ok(entidad);
         }
@@ -51,7 +53,7 @@ namespace WebApiConcecionaria.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Cliente cliente)
         {
-            
+            loggerCustom.Info("Insercion Del Regitro Nuevo");
             _context.ClienteRepo.Insert(cliente);//agrega un registro
             _context.Save();
             return Ok();
@@ -71,12 +73,12 @@ namespace WebApiConcecionaria.Controllers
         {
             if (id != cliente.idCliente)
             {
-                
+                loggerCustom.Error("No Se Encontro El Regisro Solicitado");
                 return BadRequest();//NO se encontro id del registro
             }
             else
             {
-                
+                loggerCustom.Info("Se Modifico El Regisro Solicitado");
                 _context.ClienteRepo.Update(cliente);//modifica registro
                 _context.Save();
                 return Ok();
@@ -101,11 +103,12 @@ namespace WebApiConcecionaria.Controllers
 
             if (entity == null)
             {
-                
-                return NotFound();
+                loggerCustom.Error("No Se Encontro El Regisro Solicitado");
+                return NotFound("No Se Encontro El Regisro Solicitado");
             }
             else
             {
+                loggerCustom.Info("El ]Registo Ah Sido Borrado");
                 _context.ClienteRepo.Delete(id);//borra el registro
                 _context.Save();
             }
